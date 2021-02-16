@@ -16,9 +16,21 @@ class CustomerController extends Controller
     {
         //
 
-        $customers = Customer::all();
+       try {
+           
+            $customers = Customer::all();
+            return response()->json([
+                'success' => true,
+                'data' => $customers,
+            ]);
 
-        return response()->json($customers);
+       } catch (\Exception $e) {
+
+            return response()->json([
+                'success' => false,
+                'error' => $e->getMessage(),
+            ]);
+       }
     }
 
     /**
@@ -41,20 +53,33 @@ class CustomerController extends Controller
     {
         //
 
-        $validata = $request->validate([
-            'name'     => 'required',
-            'contact'  => 'required|max:11',
-            'location' => 'required',
-            'city'     => 'required',
-        ]);
+       try {
 
-        $customer = Customer::create($validata);
+            $validata = $request->validate([
+                'name'     => 'required',
+                'contact'  => 'required|max:11',
+                'location' => 'required',
+                'city'     => 'required',
+            ]);
 
-        return response()->json([
-            'Message' => 'SuccessFul Created',
-            'Date'    => $customer
+            $customer = Customer::create($validata);
 
-        ]);
+            return response()->json([
+                'success' => true,
+                'Message'    => 'Customer Created'
+
+            ]);
+
+       } catch (\Exception $e) {
+
+            return response()->json([
+
+                'success' => false,
+                'error'   => $e->getMessage(),
+
+            ]);
+
+       }
     }
 
     /**

@@ -15,9 +15,21 @@ class StoreController extends Controller
     public function index()
     {
         //
-        $stores = Store::all();
+        try {
 
-        return response()->json($stores);
+            $stores = Store::all();
+            return response()->json([
+                'success' => true,
+                'data'    => $stores
+            ]);
+
+        } catch (\Exception $e) {
+
+            return response()->json([
+                'success' => false,
+                'error'    => $e->getMessage(),
+            ]);
+        }
     }
 
     /**
@@ -40,17 +52,27 @@ class StoreController extends Controller
     {
         //
 
-        $data = $request->validate([
-            'store_name' => 'required',
-        ]);
+       try {
+
+            $data = $request->validate([
+                'store_name' => 'required',
+            ]);
 
 
-        $store = Store::create($data);
+            $store = Store::create($data);
 
-        return response()->json([
-            'Message' => "Store Create SuccessFul",
-            'data'    => $store,
-        ]);
+            return response()->json([
+                'success' => true,
+                'data'    => $store,
+            ]);
+
+       } catch (\Exception $e) {
+
+            return response()->json([
+                'success' => false,
+                'Message'    => $e->getMessage(),
+            ]);
+       }
     }
 
     /**

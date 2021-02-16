@@ -15,8 +15,19 @@ class ShoeDetailsController extends Controller
     public function index()
     {
         //
-        $shoes = ShoeDetails::with('brand')->get();
-        return response()->json($shoes);
+        try {
+            $shoes = ShoeDetails::with('brand')->get();
+            return response()->json([
+                'success' => true,
+                'data' => $shoes
+            ]);
+
+        } catch (\Exception $e) {
+             return response()->json([
+                'success' => false,
+                'error' => $e->getMessage(),
+            ]);
+        }
     }
 
     /**
@@ -38,29 +49,58 @@ class ShoeDetailsController extends Controller
     public function store(Request $request)
     {
         //
+        try
+        {
+            
+            $data = $request->validate([
+                'brand_id' => 'required',
+                'image'    => 'required',
+                'quantity' => 'required',
+                'color'    => 'required',
+                'artical'  => 'required',
+            ]);
 
-        $data = $request->validate([
-            'brand_id' => 'required',
-            'image'    => 'required',
-            'quantity' => 'required',
-            'color'    => 'required',
-            'artical'  => 'required',
-        ]);
+            $destination = 'public/images';
+            $image = $request->image;
+            $image_name = $image->getClientOriginalName(); // insert this into database
+            $path = $request->image->storeAs($destination,$image_name);
 
-        $destination = 'public/images';
-        $image = $request->image;
-        $image_name = $image->getClientOriginalName(); // insert this into database
-        $path = $request->image->storeAs($destination,$image_name);
-
-        $data['image'] = $image_name;
+            $data['image'] = $image_name;
 
 
-        $shoe = ShoeDetails::create($data);
+            $shoe = ShoeDetails::create($data);
 
-        return response()->json([
-            'Message' => 'Add SuccesFull',
-            'data'    => $shoe
-        ]);
+            return response()->json([
+                'success' => true,
+                'Message'    => 'Created SuccessFull'
+            ]);
+
+        } catch (\Exception $e) {
+
+            return response()->json([
+                'success' => false,
+               'error' => $e->getMessage(),
+           ]);
+       }
+    }
+
+
+    public function getShoesQuantity(){
+
+        try {
+            $totalQuantity = ShoeDetails::sum('quantity');
+
+            return response()->json([
+                'success' => true,
+                'data' => $totalQuantity
+            ]);
+
+        } catch (\Exception $e) {
+             return response()->json([
+                 'success' => false,
+                'error' => $e->getMessage(),
+            ]);
+        }
     }
 
     /**

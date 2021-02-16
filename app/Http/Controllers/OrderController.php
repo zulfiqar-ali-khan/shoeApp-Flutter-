@@ -15,8 +15,23 @@ class OrderController extends Controller
     public function index()
     {
         //
-        $orders = Order::with('customer','brand','shoedetails')->get();
-        return response()->json($orders);
+        try {
+
+            $orders = Order::with('customer','brand','shoedetails')->get();
+            return response()->json([
+                'success' => true,
+                'data' => $orders,
+            ]);
+
+
+        } catch (\Exception $e) {
+
+             return response()->json([
+                'success' => false,
+                'data' => $e->getMessage(),
+            ]);
+
+        }
     }
 
     /**
@@ -39,21 +54,31 @@ class OrderController extends Controller
     {
         //
 
-        $data = $request->validate([
-            'brand_id'     => 'required',
-            'shoe_id'      => 'required',
-            'customer_id'  => 'required',
-            'quantity'     => 'required',
-            'total_amount' => 'required',
-        ]);
+       try {
+            $data = $request->validate([
+                'brand_id'     => 'required',
+                'shoe_id'      => 'required',
+                'customer_id'  => 'required',
+                'quantity'     => 'required',
+                'total_amount' => 'required',
+            ]);
 
 
-        $orders = Order::create($data);
+            $orders = Order::create($data);
 
-        return response()->json([
-            'Message' => 'Order Place SuccesFull',
-            'data' => $orders,
-        ]);
+            return response()->json([
+                'success' => true,
+                'Message' => 'Order Created',
+            ]);
+
+
+       } catch (\Exception $e) {
+
+            return response()->json([
+                'success' => false,
+                'error' => $e->getMessage(),
+            ]);
+       }
     }
 
     /**

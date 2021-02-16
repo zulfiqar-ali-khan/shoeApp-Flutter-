@@ -57,11 +57,15 @@ Route::post('/login',[UserController::class,'login']);
      // Shoe Details Api Route__________________________________
      Route::post('/shoeCreate',[ShoeDetailsController::class,'store']);
      Route::get('/shoeDetails',[ShoeDetailsController::class,'index']);
+     Route::get('/getShoesQuantity',[ShoeDetailsController::class,'getShoesQuantity']);
 
     // ++++++++++++++++++++
 
 
      // Orders Api Rooute_______________________________________
-     Route::get('/',[OrderController::class,'index']);
+     Route::get('orders',[OrderController::class,'index']);
+     Route::post('createOrder',[OrderController::class,'store']);
+
+     
 
 

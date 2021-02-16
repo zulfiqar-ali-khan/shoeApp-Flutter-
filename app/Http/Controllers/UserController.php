@@ -20,7 +20,6 @@ class UserController extends Controller
     {
         //
         $user =  Auth::user();
-
         return response()->json($user);
         
     }
@@ -45,53 +44,71 @@ class UserController extends Controller
     {
         //
 
-        $validateData = $request->validate([
-            'name'     => 'required',
-            'email'    => 'email|required|unique:users,email',
-            'password' => 'required',
-            'role'     => 'required'
-        ]);  
+        try {
+            $validateData = $request->validate([
+                'name'     => 'required',
+                'email'    => 'email|required|unique:users,email',
+                'password' => 'required',
+                'role'     => 'required'
+            ]);  
+    
+            $validateData['password']   = bcrypt($request->password);
+    
+            
+            $user                       = User::create($validateData);
+            
+            $accessToken                = $user->createToken('authToken')->accessToken;
+            
+    
+            return response()->json([
+                'success'        => true,
+                'Message' => 'Register SuccessFull'
+            ]);
 
-        $validateData['password']   = bcrypt($request->password);
+        } catch (\Exception $e) {
+            
+            return response()->json([
+                'success' => false,
+                'error' => $e->getMessage(),
+            ]);
+        }
 
-        
-        $user                       = User::create($validateData);
-        
-        $accessToken                = $user->createToken('authToken')->accessToken;
-        
 
-        return response()->json([
-            'success'        => true,
-            'Message' => 'Register SuccessFull'
-        ]);
+
+
     }
 
     public function login(Request $request){
 
-        $loginData = $request->validate([
-            'email'    => 'email|required',
-            'password' => 'required',
-        ]);
-
-        if (!Auth::attempt($loginData)) {
-            return response()->json([
-                'code'    => 403,
-                'Message' => "Unauthurized..!"
+        try {
+            $loginData = $request->validate([
+                'email'    => 'email|required',
+                'password' => 'required',
             ]);
+    
+            if (!Auth::attempt($loginData)) {
+                return response()->json([
+                    'code'    => 403,
+                    'Message' => "Unauthurized..!"
+                ]);
+            }
+    
+            $user           = User::where("email", $request->email)->first();
+            
+            if (!Hash::check($request->password, $user->password, [])) {
+                throw new \Exception("Error in Login");
+            }
+    
+            $tokenResult    = $user->createToken("authToken")->accessToken;
+    
+            return response()->json([
+                'success' => true,
+                'data'    => $user,
+            ]);
+
+        } catch (\Exception $e) {
+            //throw $th;
         }
-
-        $user           = User::where("email", $request->email)->first();
-        
-        if (!Hash::check($request->password, $user->password, [])) {
-            throw new \Exception("Error in Login");
-        }
-
-        $tokenResult    = $user->createToken("authToken")->accessToken;
-
-        return response()->json([
-            'data'    => $user,
-            'Message' => 'SuccessFull',
-        ]);
 
 
 

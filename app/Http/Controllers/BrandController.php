@@ -15,9 +15,19 @@ class BrandController extends Controller
     public function index()
     {
         //
-        $brands = Brand::all();
+        try {
+                $brands = Brand::all();
+                return response()->json([
+                    'success' => true,
+                    'data' => $brands
+                ]);
 
-        return response()->json($brands);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'error' => $e->getMessage()
+            ]);
+        }
     }
 
     /**
@@ -40,16 +50,25 @@ class BrandController extends Controller
     {
         //
 
-        $data = $request->validate([
-            'brand_name' => 'required',
-        ]);
+        try {
 
-        $brand = Brand::create($data);
+            $data = $request->validate([
+                'brand_name' => 'required',
+            ]);
+    
+            $brand = Brand::create($data);
+    
+            return response()->json([
+                'success' => true,
+                'Message'    => 'Brand Created',
+            ]);
 
-        return response()->json([
-            'Message' => "Brand Sucessful Add",
-            'data'    => $brand,
-        ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'error'    => $e->getMessage(),
+            ]);
+        }
     }
 
     /**
