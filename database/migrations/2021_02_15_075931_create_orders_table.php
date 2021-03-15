@@ -16,11 +16,17 @@ class CreateOrdersTable extends Migration
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
             $table->foreignId('brand_id');
-            $table->foreignId('shoe_id');
+            $table->foreignId('store_id');
+            $table->foreignId('artical');
             $table->foreignId('customer_id');
             $table->integer('quantity');
             $table->integer('total_amount');
             $table->timestamps();
+
+            $table->foreign('brand_id')->references('id')->on('brads');
+            $table->foreign('store_id')->references('id')->on('stores');
+            $table->foreign('artical')->references('id')->on('shoe_details');
+            $table->foreign('customer_id')->references('id')->on('customers');
         });
     }
 

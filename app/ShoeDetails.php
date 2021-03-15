@@ -9,15 +9,19 @@ class ShoeDetails extends Model
     //
 
     protected $fillable = [
-        'brand_id','image','quantity','color','artical'
+        'brand_id','quantity','color','artical','store_id'
     ];
 
     public function brand(){
         return $this->hasMany('App\Brand','id','brand_id');
     }
 
+    public function store(){
+        return $this->hasMany('App\Store','id','store_id');
+    }
+
 
     public function order(){
-        return $this->belongsTo('App\Order','id','shoe_id');
+        return $this->belongsTo('App\Order','artical','artical');
     }
 }

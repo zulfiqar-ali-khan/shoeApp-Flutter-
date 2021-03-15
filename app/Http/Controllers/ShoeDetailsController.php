@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\ShoeDetails;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Request;
 
 class ShoeDetailsController extends Controller
@@ -54,18 +55,18 @@ class ShoeDetailsController extends Controller
             
             $data = $request->validate([
                 'brand_id' => 'required',
-                'image'    => 'required',
+                'store_id' => 'required',
                 'quantity' => 'required',
                 'color'    => 'required',
                 'artical'  => 'required',
             ]);
 
-            $destination = 'public/images';
-            $image = $request->image;
-            $image_name = $image->getClientOriginalName(); // insert this into database
-            $path = $request->image->storeAs($destination,$image_name);
+            // $destination = 'images';
+            // $image = $request->file('image');
+            // $image_uploaded_path = $image->store($destination, 'public');
 
-            $data['image'] = $image_name;
+            // $data['image'] = basename($image_uploaded_path);
+            // // Storage::disk('public')->url($image_uploaded_path);
 
 
             $shoe = ShoeDetails::create($data);

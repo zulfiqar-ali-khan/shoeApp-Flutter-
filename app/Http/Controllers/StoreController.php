@@ -63,7 +63,7 @@ class StoreController extends Controller
 
             return response()->json([
                 'success' => true,
-                'data'    => $store,
+                'Message'    => 'Store Add SuccessFull'
             ]);
 
        } catch (\Exception $e) {

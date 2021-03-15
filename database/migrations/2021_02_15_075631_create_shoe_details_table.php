@@ -16,11 +16,16 @@ class CreateShoeDetailsTable extends Migration
         Schema::create('shoe_details', function (Blueprint $table) {
             $table->id();
             $table->foreignId('brand_id');
-            $table->string('image');
+            $table->foreignId('store_id');
+            // $table->string('image');
             $table->integer('quantity');
             $table->string('color');
             $table->string('artical');
             $table->timestamps();
+
+
+            $table->foreign('brand_id')->references('id')->on('brads');
+            $table->foreign('store_id')->references('id')->on('stores');
         });
     }
 

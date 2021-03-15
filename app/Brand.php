@@ -18,4 +18,8 @@ class Brand extends Model
     public function order(){
         return $this->belongsTo('App\Order','id','brand_id');
     }
+
+    public function customorder(){
+        return $this->belongsTo('App\Order','id','brand_id');
+    }
 }

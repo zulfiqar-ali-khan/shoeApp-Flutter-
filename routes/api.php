@@ -9,6 +9,8 @@ use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\StoreController;
 use App\Http\Controllers\BrandController;
 use App\Http\Controllers\ShoeDetailsController;
+use App\Http\Controllers\CustomOrderController;
+use App\Http\Controllers\StockController;
 
 
 /*
@@ -63,8 +65,24 @@ Route::post('/login',[UserController::class,'login']);
 
 
      // Orders Api Rooute_______________________________________
-     Route::get('orders',[OrderController::class,'index']);
      Route::post('createOrder',[OrderController::class,'store']);
+     Route::get('orders',[OrderController::class,'index']);
+
+
+
+     // Orders Api Rooute_______________________________________
+     Route::post('customOrder_create',[CustomOrderController::class,'store']);
+     Route::get('custom_orders',[CustomOrderController::class,'index']);
+
+
+    //  Stock Api Route
+    Route::post('create_stock',[StockController::class,'store']);
+    Route::get('stocks',[StockController::class,'index']);
+
+    //  Filter of Article
+    Route::get('withbrand_name/{id}',[StockController::class,'show']);
+
+
 
      
 

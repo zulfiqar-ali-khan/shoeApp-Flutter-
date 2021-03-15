@@ -19,8 +19,9 @@ class UserController extends Controller
     public function index()
     {
         //
-        $user =  Auth::user();
-        return response()->json($user);
+        $users = User::where('role',0)->get();
+        return view('user.users',compact('users'));
+
         
     }
 
@@ -49,28 +50,20 @@ class UserController extends Controller
                 'name'     => 'required',
                 'email'    => 'email|required|unique:users,email',
                 'password' => 'required',
-                'role'     => 'required'
             ]);  
     
             $validateData['password']   = bcrypt($request->password);
+            $validateData['role']   = 0;
+            
+            $user                       = User::create($validateData);            
     
-            
-            $user                       = User::create($validateData);
-            
-            $accessToken                = $user->createToken('authToken')->accessToken;
-            
-    
-            return response()->json([
-                'success'        => true,
-                'Message' => 'Register SuccessFull'
-            ]);
+            if($user){
+                return redirect()->route('user.index')->with('message','user Created');
+            }
 
         } catch (\Exception $e) {
             
-            return response()->json([
-                'success' => false,
-                'error' => $e->getMessage(),
-            ]);
+            return $e->getMessage();
         }
 
 

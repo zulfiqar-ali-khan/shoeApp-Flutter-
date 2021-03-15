@@ -9,13 +9,13 @@ class Order extends Model
     //
 
     protected $fillable = [
-        'brand_id','shoe_id','customer_id','quantity','total_amount'
+        'brand_id','artical','customer_id','quantity','total_amount','store_id'
     ];
 
 
 
     public function shoedetails(){
-        return $this->hasMany('App\ShoeDetails','id','shoe_id');
+        return $this->hasMany('App\ShoeDetails','artical','artical');
     }
 
 

@@ -57,7 +57,8 @@ class OrderController extends Controller
        try {
             $data = $request->validate([
                 'brand_id'     => 'required',
-                'shoe_id'      => 'required',
+                'store_id'     => 'required',
+                'artical'      => 'required',
                 'customer_id'  => 'required',
                 'quantity'     => 'required',
                 'total_amount' => 'required',
