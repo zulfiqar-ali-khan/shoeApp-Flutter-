@@ -51,13 +51,16 @@
                         <a href="{{route('customer.index')}}"><i class="fa fa-users"></i> <span class="nav-label">Customer</span></a>
                     </li>
                     <li>
-                        <a href="{{route('store.index')}}"><i class="fa fa-database"></i> <span class="nav-label">Store</span></a>
+                        <a href="{{route('store.index')}}"><i class="fa fa-home"></i> <span class="nav-label">Store</span></a>
                     </li>
                     <li>
                         <a href="{{route('brand.index')}}"><i class="fa fa-diamond"></i> <span class="nav-label">Brand</span></a>
                     </li>
                     <li>
                         <a href="{{route('shoedetails.index')}}"><i class="fa fa-cube"></i> <span class="nav-label">Shoe Stock</span></a>
+                    </li>
+                    <li>
+                        <a href="{{route('stock.index')}}"><i class="fa fa-database"></i> <span class="nav-label">Add Stock</span></a>
                     </li>
                     <li>
                         <a href="{{route('order.index')}}"><i class="fa fa-truck"></i> <span class="nav-label">Orders</span></a>

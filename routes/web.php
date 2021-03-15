@@ -42,15 +42,16 @@ Route::group(['middleware' => ['auth']], function () {
     // Order 
     Route::resource('order', 'Web\OrderController');
     Route::post('takeshoes', 'Web\OrderController@takeshoes')->name('takeshoes');
-    Route::post('takestock', 'Web\OrderController@takestock')->name('takestock');
+    // Route::post('takestock', 'Web\OrderController@takestock')->name('takestock');
 
 
     // ShowDetails
     Route::resource('shoedetails', 'Web\ShowDetailsController');
 
 
-    // // Stock
-    // Route::resource('stock', 'Web\StockController');
+    // Stock
+    Route::resource('stock', 'Web\StockController');
+    Route::post('takeshoesstock', 'Web\StockController@takeshoesstock')->name('takeshoesstock');
 
 
     // Store 

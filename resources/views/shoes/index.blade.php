@@ -35,7 +35,7 @@
         <div class="col-lg-12">
             <div class="ibox float-e-margins">
                 <div class="ibox-title">
-                    <h5>Brand List</h5>
+                    <h5>Shoe List</h5>
                     <div class="ibox-tools">
                         <a class="collapse-link">
                             <i class="fa fa-chevron-up"></i>
@@ -63,10 +63,8 @@
                                     <th>#</th>
                                     {{-- <th>Image</th> --}}
                                     <th>Brand Name</th>
-                                    <th>Store Name</th>
                                     <th>Color</th>
                                     <th>Artical</th>
-                                    <th>Quantity</th>
                                     <th>Date</th>
                                     {{-- <th>Action</th> --}}
                                 </tr>
@@ -80,14 +78,8 @@
                                     <td>{{$item->brand_name}}</td>
                                         
                                     @endforeach
-
-                                    @foreach ($shoe->store as $store)
-                                    <td>{{$store->store_name}}</td>
-                                        
-                                    @endforeach
                                     <td>{{$shoe->color}}</td>
                                     <td>{{$shoe->artical}}</td>
-                                    <td>{{$shoe->quantity}}</td>
                                     <td>{{$shoe->created_at->format('d-m-Y')}}</td>
                                     {{-- <td>
                                         <div class="btn-group btn-group-xs">
@@ -139,25 +131,6 @@
 
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label for="">Select Store</label>
-                                <select name="store_id" class="form-control" id="">
-                                    <option value="">--Select Store--</option>
-                                    @foreach ($stores as $store)
-                                        <option value="{{$store->id}}">{{$store->store_name}}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                        </div>
-
-                        {{-- <div class="col-md-6">
-                            <div class="form-group">
-                                <label for="">Image</label>
-                                <input type="file" name="image" class="form-control">
-                            </div>
-                        </div> --}}
-
-                        <div class="col-md-6">
-                            <div class="form-group">
                                 <label for="">Color</label>
                                 <input type="text" name="color" class="form-control">
                             </div>
@@ -169,12 +142,7 @@
                                 <input type="text" name="artical" class="form-control">
                             </div>
                         </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label for="">Quantity</label>
-                                <input type="text" name="quantity" class="form-control">
-                            </div>
-                        </div>
+                      
                     </div>
                    
                     <div class="form-group">

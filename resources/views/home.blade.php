@@ -20,7 +20,7 @@
                     <h5>{{$brand->brand_name}}</h5>
                 </div>
                 <div class="ibox-content">
-                    @php
+                    {{-- @php
                         $stock=0;
                         $assign=0;
                     @endphp
@@ -29,8 +29,8 @@
                     @endif
                     @if(!$brand->order == null)
                         @php $assign = $brand->order->saleStock @endphp
-                        @endif
-                    <h3 class="no-margins">{{number_format($stock - $assign)}}</h3>
+                        @endif --}}
+                    <h3 class="no-margins">{{number_format($brand->stock->totalstock)}}</h3>
                 </div>
             </div>
         </div>

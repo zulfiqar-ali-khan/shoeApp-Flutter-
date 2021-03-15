@@ -15,6 +15,10 @@ class Brand extends Model
         return $this->belongsTo('App\ShoeDetails','id','brand_id');
     }
 
+    public function stock(){
+        return $this->belongsTo('App\Stock','id','brand_id');
+    }
+
     public function order(){
         return $this->belongsTo('App\Order','id','brand_id');
     }
@@ -22,4 +26,6 @@ class Brand extends Model
     public function customorder(){
         return $this->belongsTo('App\Order','id','brand_id');
     }
+
+    
 }

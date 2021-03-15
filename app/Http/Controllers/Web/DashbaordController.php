@@ -16,11 +16,9 @@ class DashbaordController extends Controller
      */
     public function index()
     {
-        $brands = Brand::with(['shoedetails' => function($q){
-            $q->selectRaw('SUM(quantity) as totalstock , brand_id')->groupBy('brand_id');
-        }])->with(['order'=> function($q){
-            $q->selectRaw('SUM(quantity) as saleStock , brand_id')->groupBy('brand_id');
-            }])->get();
+        $brands = Brand::with(['stock' => function($q){
+            $q->selectRaw('SUM(add_stock) - SUM(sale_stock)  as totalstock , brand_id')->groupBy('brand_id');
+        }])->get();
         // return $brands;
         $current = date('Y-m-d');
         $orders = Order::with('customer','brand','shoedetails')->orderBy('id','desc')->get();

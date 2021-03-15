@@ -14,4 +14,14 @@ class Store extends Model
     public function shoedetails(){
         return $this->belongsTo('App\ShoeDetails','id','brand_id');
     }
+
+    public function stock(){
+        return $this->belongsTo('App\Stock','id','store_id');
+    }
+
+    public function order(){
+        return $this->belongsTo('App\Order','id','store_id');
+    }
+
+    
 }

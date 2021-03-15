@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\CustomOrder;
+use App\Brand;
+use App\store;
+use App\ShoeDetails;
 use App\Stock;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -19,11 +21,21 @@ class StockController extends Controller
         //
 
        try {
-            $data = Stock::all();
+
+        $stocks = Stock::with('brand','store','shoedetails')->get();
+        // // return $stocks;
+        // $brands = Brand::all();
+        // $stores = store::all();
+        // return view('stock.index',compact('brands','stores','stocks'));
+           
+            // $data = Stock::all();
+
             return response()->json([
                 'success' => true,
-                'data' => $data
+                'data' => $stocks
             ]);
+
+
        } catch (\Exception $e) {
             return response()->json([
                 'success' => false,
@@ -52,25 +64,16 @@ class StockController extends Controller
     {
         //
         try {
+
             $data = $request->validate([
-                'brand_name' => 'required',
-                'color' => 'required',
-                'article' => 'required',
-                'shoe_quantity' => 'required',
+                'brand_id' => 'required',
+                'store_id' => 'required',
+                'shoe_id'  => 'required',
+                'quantity' => 'required',
             ]);
 
-            $image = $request->shoe_img;
-
-            $ext = explode(';base64',$image);
-            $ext = explode('/',$ext[0]);			
-            $ext = $ext[1];	
-
-            // $destination = 'images';
-            // $image = $request->shoe_img;
-            // $image_name = $image->getClientOriginalName(); // insert this into database
-            // $path = $request->shoe_img->storeAs($destination,$image_name);
-
-            $data['shoe_img'] = $ext;  
+            $data['add_stock'] = $request->quantity;
+            $data['sale_stock'] = 0;
 
             $result = Stock::create($data);
             

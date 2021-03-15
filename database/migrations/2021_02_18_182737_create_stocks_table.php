@@ -15,12 +15,17 @@ class CreateStocksTable extends Migration
     {
         Schema::create('stocks', function (Blueprint $table) {
             $table->id();
-            $table->string('brand_name');
-            $table->string('color');
-            $table->string('article');
-            $table->integer('shoe_quantity');
-            $table->string('shoe_img');
+            $table->foreignId('brand_id');
+            $table->foreignId('store_id');
+            $table->foreignId('shoe_id');
+            $table->integer('add_stock');
+            $table->integer('sale_stock');
             $table->timestamps();
+            $table->softDeletes();
+
+            $table->foreign('brand_id')->references('id')->on('brands');
+            $table->foreign('store_id')->references('id')->on('stores');
+            $table->foreign('shoe_id')->references('id')->on('shoe_details');
         });
     }
 

@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use App\Order;
 use App\ShoeDetails;
 use App\Store;
+use App\Stock;
 
 class OrderController extends Controller
 {
@@ -48,25 +49,30 @@ class OrderController extends Controller
         //
         // dd($request->all());
         try {
-            // $data = $request->validate([
-            //     'brand_id'     => 'required',
-            //     'store_id'     => 'required',
-            //     'artical'      => 'required',
-            //     'customer_id'  => 'required',
-            //     'quantity'     => 'required',
-            //     'total_amount' => 'required',
-            // ]);
-           
-            // $orders = Order::create($data);
-            $row = new Order();
-            $row->customer_id = $request->customer_id;
-            $row->store_id = $request->store_id;
-            $row->brand_id = $request->brand_id;
-            $row->artical = $request->artical;
-            $row->quantity = $request->quantity;
-            $row->total_amount = $request->total_amount;
 
-            $orders = $row->save();
+            $data = $request->validate([
+                'brand_id' => 'required',
+                'store_id'    => 'required',
+                'shoe_id'  => 'required',
+                'quantity'  => 'required',
+            ]);
+
+            $data['sale_stock'] = $request->quantity;
+            $data['add_stock'] = 0;
+            $stock = Stock::create($data);
+           
+            if($stock){
+                // $orders = Order::create($data);
+                $row = new Order();
+                $row->customer_id = $request->customer_id;
+                $row->store_id = $request->store_id;
+                $row->brand_id = $request->brand_id;
+                $row->shoe_id = $request->shoe_id;
+                $row->quantity = $request->quantity;
+                $row->total_amount = $request->total_amount;
+
+                $orders = $row->save();
+            }
 
             if($orders){
                 return redirect()->route('order.index')->with('message','Order Added');

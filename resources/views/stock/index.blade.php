@@ -2,7 +2,7 @@
 
 
 {{-- For Title --}}
-@section('title')  Orders @endsection
+@section('title')  Stock @endsection
 
 
 
@@ -11,21 +11,21 @@
 
 <div class="row wrapper border-bottom white-bg page-heading">
     <div class="col-lg-10">
-        <h2>Order List</h2>
+        <h2>Stock List</h2>
         <ol class="breadcrumb">
             <li>
                 <a href="{{route('dashboard')}}">Home</a>
             </li>
             <li>
-                <a>Orders</a>
+                <a>Stock</a>
             </li>
             <li class="active">
-                <strong>Order List</strong>
+                <strong>Stock List</strong>
             </li>
         </ol>
     </div>
     <div class="col-lg-2">
-        <a class="btn btn-info btn-outline" data-toggle="modal" data-target="#myModal6" style="margin-top:40px;">Add Order</a>
+        <a class="btn btn-info btn-outline" data-toggle="modal" data-target="#myModal6" style="margin-top:40px;">Add Stock</a>
     </div>
 
 </div>
@@ -35,7 +35,7 @@
         <div class="col-lg-12">
             <div class="ibox float-e-margins">
                 <div class="ibox-title">
-                    <h5>Order List</h5>
+                    <h5>Stock List</h5>
                     <div class="ibox-tools">
                         <a class="collapse-link">
                             <i class="fa fa-chevron-up"></i>
@@ -61,44 +61,49 @@
                             <thead>
                                 <tr>
                                     <th>#</th>
-                                    <th>Customer Name</th>
                                     <th>Brand Name</th>
-                                    <th>Color</th>
+                                    <th>Store Name</th>
                                     <th>Artical</th>
+                                    <th>Color</th>
                                     <th>Quantity</th>
+                                    <th>Status</th>
                                     <th>Date</th>
-                                    {{-- <th>Action</th> --}}
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($orders as $key => $order)
-                                <tr>
-                                    <td>{{$key+1}}</td>
-                                    @foreach ($order->customer as $customer)
-                                    <td>{{$customer->name}}</td>
-                                    @endforeach
+                                @foreach ($stocks as $key => $stock)
+                                    <tr>
+                                        <td>{{$key+1}}</td>
+                                        @foreach ($stock->brand as $brand)
+                                            <td>{{$brand->brand_name}}</td>
+                                        @endforeach
 
-                                    @foreach ($order->brand as $item)
-                                    <td>{{$item->brand_name}}</td>
-                                    @endforeach
+                                        @foreach ($stock->store as $store)
+                                            <td>{{$store->store_name}}</td>
+                                        @endforeach
 
-                                    @foreach ($order->shoedetails as $shoe)
-                                    <td>{{$shoe->color}}</td>
-                                    <td>{{$shoe->artical}}</td>
-                                    @endforeach
-                                    <td>{{$order->quantity}}</td>
-                                    <td>{{$order->created_at->format('d-m-Y')}}</td>
-                                    {{-- <td>
-                                        <div class="btn-group btn-group-xs">
-                                            <a href="" class="btn btn-danger" onclick="return confirm('Are You Sure To Delete This..?')" title="Delete"><i class="fa fa-trash"></i></a>
-                                            <a href="" class="btn btn-warning" title="Edit"><i class="fa fa-edit"></i></a>
-                                            <a href="" class="btn btn-primary" title="View Profile"><i class="fa fa-eye"></i></a>
-                                        </div>
-                                    </td> --}}
-                                </tr>
-                                    
-                                @endforeach
-                               
+                                        @foreach ($stock->shoedetails as $shoe)
+                                            <td>{{$shoe->artical}}</td>
+                                            <td>{{$shoe->color}}</td>
+                                        @endforeach
+
+                                        <td>
+                                            @if($stock->add_stock !== 0)
+                                            {{$stock->add_stock}}
+                                            @else
+                                                {{$stock->sale_stock}}
+                                            @endif
+                                        </td>
+                                        <td>
+                                            @if($stock->add_stock !== 0)
+                                                <span class="label label-primary">Add</span>
+                                                @else
+                                                <span class="label label-danger">Sale</span>
+                                            @endif
+                                        </td>
+                                        <td>{{$stock->created_at->format('d-m-Y')}}</td>
+                                    </tr>
+                                @endforeach                            
                         
                             </tbody>
                         </table>
@@ -118,24 +123,12 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                <h4 class="modal-title">Add Order</h4>
+                <h4 class="modal-title">Add Stock</h4>
             </div>
             <div class="modal-body">
-                <form action="{{route('order.store')}}" method="POST" enctype="multipart/form-data">
+                <form action="{{route('stock.store')}}" method="POST">
                     {{csrf_field()}}
                     <div class="row">
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label for="">Select Customer</label>
-                                <select name="customer_id" class="form-control" id="">
-                                    <option value="">--Select Customer--</option>
-                                    @foreach ($customers as $customer)
-                                        <option value="{{$customer->id}}">{{$customer->name}}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                        </div>
-
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="">Select Brand</label>
@@ -147,11 +140,10 @@
                                 </select>
                             </div>
                         </div>
-
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="">Select Store</label>
-                                <select name="store_id" class="form-control" id="store">
+                                <select name="store_id" class="form-control" id="">
                                     <option value="">--Select Store--</option>
                                     @foreach ($stores as $store)
                                         <option value="{{$store->id}}">{{$store->store_name}}</option>
@@ -168,24 +160,13 @@
                             </div>
                         </div>
 
-                        {{-- <div class="col-md-6">
-                            <div class="form-group">
-                                <label for="">Avalible Qty</label>
-                                <input type="text" name="" class="form-control" readonly>
-                            </div>
-                        </div> --}}
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="">Quantity</label>
                                 <input type="text" name="quantity" class="form-control">
                             </div>
                         </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label for="">Total Amount</label>
-                                <input type="text" name="total_amount" class="form-control">
-                            </div>
-                        </div>
+                      
                     </div>
                    
                     <div class="form-group">
@@ -224,7 +205,7 @@
 
             $.ajax({
                 type:"POST",
-                url:'{{url("takeshoes")}}',
+                url:'{{url("takeshoesstock")}}',
                 data:{
                     brand_id:brand,
                     _token:'{{ csrf_token() }}'

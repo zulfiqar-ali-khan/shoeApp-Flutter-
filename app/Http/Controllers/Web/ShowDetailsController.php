@@ -18,10 +18,9 @@ class ShowDetailsController extends Controller
     public function index()
     {
         //
-        $shoes = ShoeDetails::with('brand','store')->get();
+        $shoes = ShoeDetails::with('brand')->get();
         $brands = Brand::all();
-        $stores = Store::all();
-        return view('shoes.index',compact('shoes','brands','stores'));
+        return view('shoes.index',compact('shoes','brands'));
     }
 
     /**
@@ -50,10 +49,10 @@ class ShowDetailsController extends Controller
             $data = $request->validate([
                 'brand_id' => 'required',
                 // 'image'    => 'required',
-                'quantity' => 'required',
+                // 'quantity' => 'required',
                 'color'    => 'required',
                 'artical'  => 'required',
-                'store_id'  => 'required',
+                // 'store_id'  => 'required',
             ]);
 
             // $destination = 'images';

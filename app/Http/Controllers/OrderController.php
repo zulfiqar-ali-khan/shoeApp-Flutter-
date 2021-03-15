@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Order;
+use App\Stock;
 use Illuminate\Http\Request;
 
 class OrderController extends Controller
@@ -17,7 +18,7 @@ class OrderController extends Controller
         //
         try {
 
-            $orders = Order::with('customer','brand','shoedetails')->get();
+            $orders = Order::with('customer','brand','shoedetails','store')->get();
             return response()->json([
                 'success' => true,
                 'data' => $orders,
@@ -55,10 +56,22 @@ class OrderController extends Controller
         //
 
        try {
+
+            $stock = $request->validate([
+                'brand_id' => 'required',
+                'store_id'    => 'required',
+                'shoe_id'  => 'required',
+                'quantity'  => 'required',
+            ]);
+
+            $stock['sale_stock'] = $request->quantity;
+            $stock['add_stock'] = 0;
+            $stocks = Stock::create($stock);
+
             $data = $request->validate([
                 'brand_id'     => 'required',
                 'store_id'     => 'required',
-                'artical'      => 'required',
+                'shoe_id'      => 'required',
                 'customer_id'  => 'required',
                 'quantity'     => 'required',
                 'total_amount' => 'required',

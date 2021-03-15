@@ -55,8 +55,6 @@ class ShoeDetailsController extends Controller
             
             $data = $request->validate([
                 'brand_id' => 'required',
-                'store_id' => 'required',
-                'quantity' => 'required',
                 'color'    => 'required',
                 'artical'  => 'required',
             ]);

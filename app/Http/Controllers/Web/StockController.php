@@ -4,6 +4,10 @@ namespace App\Http\Controllers\Web;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Brand;
+use App\store;
+use App\ShoeDetails;
+use App\Stock;
 
 class StockController extends Controller
 {
@@ -15,6 +19,11 @@ class StockController extends Controller
     public function index()
     {
         //
+        $stocks = Stock::with('brand','store','shoedetails')->get();
+        // return $stocks;
+        $brands = Brand::all();
+        $stores = store::all();
+        return view('stock.index',compact('brands','stores','stocks'));
     }
 
     /**
@@ -36,6 +45,39 @@ class StockController extends Controller
     public function store(Request $request)
     {
         //
+        // dd($request->all());
+        try
+        {
+            
+            $data = $request->validate([
+                'brand_id' => 'required',
+                'store_id'    => 'required',
+                'shoe_id'  => 'required',
+                'quantity'  => 'required',
+            ]);
+
+            $data['add_stock'] = $request->quantity;
+            $data['sale_stock'] = 0;
+
+            
+
+
+            $stock = Stock::create($data);
+
+            if($stock){
+                return redirect()->route('stock.index')->with('message','Stock added');
+
+            }
+
+
+        } catch (\Exception $e) {
+
+            return $e->getMessage();
+       }
+
+        
+
+    
     }
 
     /**
@@ -81,5 +123,11 @@ class StockController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function takeshoesstock(Request $request){
+        
+        $brands = ShoeDetails::where('brand_id',$request->brand_id)->get();
+        return response()->json($brands);
     }
 }

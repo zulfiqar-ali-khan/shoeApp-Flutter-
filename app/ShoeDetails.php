@@ -9,7 +9,7 @@ class ShoeDetails extends Model
     //
 
     protected $fillable = [
-        'brand_id','quantity','color','artical','store_id'
+        'brand_id','color','artical'
     ];
 
     public function brand(){
@@ -22,6 +22,10 @@ class ShoeDetails extends Model
 
 
     public function order(){
-        return $this->belongsTo('App\Order','artical','artical');
+        return $this->belongsTo('App\Order','id','shoe_id');
+    }
+
+    public function stock(){
+        return $this->belongsTo('App\Stock','id','shoe_id');
     }
 }
