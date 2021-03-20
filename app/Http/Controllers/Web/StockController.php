@@ -58,6 +58,7 @@ class StockController extends Controller
 
             $data['add_stock'] = $request->quantity;
             $data['sale_stock'] = 0;
+            $data['order_id'] = 0;
 
             
 
@@ -123,6 +124,11 @@ class StockController extends Controller
     public function destroy($id)
     {
         //
+        $id = Stock::find($id);
+        $result = $id->delete();
+        if($result){
+            return redirect()->route('stock.index')->with('message','Stock Deleted');
+        }
     }
 
     public function takeshoesstock(Request $request){

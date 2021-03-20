@@ -21,7 +21,8 @@
 
 </head>
 
-<body>
+<body class="pace-done">
+    {{-- mini-navbar --}}
     <div id="wrapper">
         <nav class="navbar-default navbar-static-side" role="navigation">
             <div class="sidebar-collapse">
@@ -65,24 +66,7 @@
                     <li>
                         <a href="{{route('order.index')}}"><i class="fa fa-truck"></i> <span class="nav-label">Orders</span></a>
                     </li>
-                    {{-- <li>
-                        <a href="#"><i class="fa fa-bar-chart-o"></i> <span class="nav-label">Graphs</span><span
-                                class="fa arrow"></span></a>
-                        <ul class="nav nav-second-level collapse">
-                            <li><a href="graph_flot.html">Flot Charts</a></li>
-                            <li><a href="graph_morris.html">Morris.js Charts</a></li>
-                            <li><a href="graph_rickshaw.html">Rickshaw Charts</a></li>
-                            <li><a href="graph_chartjs.html">Chart.js</a></li>
-                            <li><a href="graph_chartist.html">Chartist</a></li>
-                            <li><a href="c3.html">c3 charts</a></li>
-                            <li><a href="graph_peity.html">Peity Charts</a></li>
-                            <li><a href="graph_sparkline.html">Sparkline Charts</a></li>
-                        </ul>
-                    </li> --}}
-                    {{-- <li>
-                        <a href="mailbox.html"><i class="fa fa-envelope"></i> <span class="nav-label">Mailbox
-                            </span><span class="label label-warning pull-right">16/24</span></a>
-                    </li> --}}
+                   
                 </ul>
 
             </div>
@@ -92,7 +76,7 @@
             <div class="row border-bottom">
                 <nav class="navbar navbar-static-top white-bg" role="navigation" style="margin-bottom: 0">
                     <div class="navbar-header">
-                        <a class="navbar-minimalize minimalize-styl-2 btn btn-primary " href="#"><i
+                        <a class="navbar-minimalize minimalize-styl-2 btn btn-primary navabartoggle" href="#"><i
                                 class="fa fa-bars"></i> </a>
                         <form role="search" class="navbar-form-custom" action="search_results.html">
                             <div class="form-group">
@@ -334,6 +318,15 @@
         
 
 
+        });
+    </script>
+
+    <script>
+        $(document).ready(function(){
+            $('.navabartoggle').on('click', function () {
+                $("body").toggleClass("mini-navbar");
+                // SmoothlyMenu();
+            });
         });
     </script>
 

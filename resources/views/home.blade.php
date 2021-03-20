@@ -30,7 +30,11 @@
                     @if(!$brand->order == null)
                         @php $assign = $brand->order->saleStock @endphp
                         @endif --}}
-                    <h3 class="no-margins">{{number_format($brand->stock->totalstock)}}</h3>
+                        @if($brand->stock !== Null)
+                            <h3 class="no-margins">{{number_format($brand->stock->totalstock)}}</h3>
+                            @else
+                            <h3 class="no-margins">0</h3>
+                        @endif
                 </div>
             </div>
         </div>

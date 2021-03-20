@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Customer;
 use App\User;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -150,5 +151,10 @@ class UserController extends Controller
     public function destroy($id)
     {
         //
+        $id = User::find($id);
+        $result = $id->delete();
+        if($result){
+            return redirect()->route('user.index')->with('message','User Deleted');
+        }
     }
 }

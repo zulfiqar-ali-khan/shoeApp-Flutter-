@@ -63,7 +63,7 @@
                                     <th>#</th>
                                     <th>Brand Name</th>
                                     <th>Date</th>
-                                    {{-- <th>Action</th> --}}
+                                    <th>Action</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -72,13 +72,13 @@
                                     <td>{{$key+1}}</td>
                                     <td>{{$brand->brand_name}}</td>
                                     <td>{{$brand->created_at->format('d-m-Y')}}</td>
-                                    {{-- <td>
+                                    <td>
                                         <div class="btn-group btn-group-xs">
-                                            <a href="" class="btn btn-danger" onclick="return confirm('Are You Sure To Delete This..?')" title="Delete"><i class="fa fa-trash"></i></a>
-                                            <a href="" class="btn btn-warning" title="Edit"><i class="fa fa-edit"></i></a>
-                                            <a href="" class="btn btn-primary" title="View Profile"><i class="fa fa-eye"></i></a>
+                                            <a href="{{route('branddelete',$brand->id)}}" class="btn btn-danger" onclick="return confirm('Are You Sure To Delete This..?')" title="Delete"><i class="fa fa-trash"></i></a>
+                                            {{-- <a href="" class="btn btn-warning" title="Edit"><i class="fa fa-edit"></i></a> --}}
+                                            {{-- <a href="" class="btn btn-primary" title="View Profile"><i class="fa fa-eye"></i></a> --}}
                                         </div>
-                                    </td> --}}
+                                    </td>
                                 </tr>
                                     
                                 @endforeach

@@ -68,6 +68,7 @@
                                     <th>Quantity</th>
                                     <th>Status</th>
                                     <th>Date</th>
+                                    <th>Action</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -102,6 +103,13 @@
                                             @endif
                                         </td>
                                         <td>{{$stock->created_at->format('d-m-Y')}}</td>
+                                        <td>
+                                            <div class="btn-group btn-group-xs">
+                                                <a href="{{route('stockdelete',$stock->id)}}" class="btn btn-danger" onclick="return confirm('Are You Sure To Delete This..?')" title="Delete"><i class="fa fa-trash"></i></a>
+                                                {{-- <a href="" class="btn btn-warning" title="Edit"><i class="fa fa-edit"></i></a> --}}
+                                                {{-- <a href="" class="btn btn-primary" title="View Profile"><i class="fa fa-eye"></i></a> --}}
+                                            </div>
+                                        </td>
                                     </tr>
                                 @endforeach                            
                         

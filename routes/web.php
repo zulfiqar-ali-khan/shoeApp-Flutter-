@@ -14,10 +14,10 @@ use Illuminate\Support\Facades\Auth;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+// layout test
+Route::get('/',function(){
+    return view('auth.login');
 });
-
 Route::get('admin',function(){
     return view('auth.login');
 });
@@ -33,33 +33,47 @@ Route::group(['middleware' => ['auth']], function () {
 
     // Customers
     Route::resource('customer', 'Web\CustomerController');
+    Route::get('customerdelete/{id}', 'Web\CustomerController@destroy')->name('customerdelete');
+
 
 
     // Brand
     Route::resource('brand', 'Web\BrandController');
+    Route::get('branddelete/{id}', 'Web\BrandController@destroy')->name('branddelete');
 
 
     // Order 
     Route::resource('order', 'Web\OrderController');
+    Route::get('orderdelete/{id}', 'Web\OrderController@destroy')->name('orderdelete');
+
     Route::post('takeshoes', 'Web\OrderController@takeshoes')->name('takeshoes');
+
     // Route::post('takestock', 'Web\OrderController@takestock')->name('takestock');
 
 
     // ShowDetails
     Route::resource('shoedetails', 'Web\ShowDetailsController');
+    Route::get('shoedelete/{id}', 'Web\ShowDetailsController@destroy')->name('shoedelete');
+
 
 
     // Stock
     Route::resource('stock', 'Web\StockController');
+    Route::get('stockdelete/{id}', 'Web\StockController@destroy')->name('stockdelete');
+
     Route::post('takeshoesstock', 'Web\StockController@takeshoesstock')->name('takeshoesstock');
 
 
     // Store 
     Route::resource('store', 'Web\StoreController');
+    Route::get('storedelete/{id}', 'Web\StoreController@destroy')->name('storedelete');
+
 
 
     // Store 
     Route::resource('user', 'UserController');
+    Route::get('userdelete/{id}', 'UserController@destroy')->name('userdelete');
+
 
 
 

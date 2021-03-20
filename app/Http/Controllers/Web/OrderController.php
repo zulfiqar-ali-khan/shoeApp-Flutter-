@@ -50,31 +50,38 @@ class OrderController extends Controller
         // dd($request->all());
         try {
 
-            $data = $request->validate([
-                'brand_id' => 'required',
-                'store_id'    => 'required',
-                'shoe_id'  => 'required',
-                'quantity'  => 'required',
-            ]);
+             // $orders = Order::create($data);
+             $row =  array(
+                 'customer_id' => $request->customer_id,
+                 'store_id' => $request->store_id, 
+                 'brand_id' => $request->brand_id, 
+                 'shoe_id' => $request->shoe_id, 
+                 'quantity' => $request->quantity, 
+                 'total_amount' => $request->total_amount, 
+            );
+             $orders = Order::create($row);
 
-            $data['sale_stock'] = $request->quantity;
-            $data['add_stock'] = 0;
-            $stock = Stock::create($data);
            
-            if($stock){
-                // $orders = Order::create($data);
-                $row = new Order();
-                $row->customer_id = $request->customer_id;
-                $row->store_id = $request->store_id;
-                $row->brand_id = $request->brand_id;
-                $row->shoe_id = $request->shoe_id;
-                $row->quantity = $request->quantity;
-                $row->total_amount = $request->total_amount;
 
-                $orders = $row->save();
+            $max = $orders->id;
+            
+           w
+            if($orders){
+                
+                $data = $request->validate([
+                    'brand_id' => 'required',
+                    'store_id'    => 'required',
+                    'shoe_id'  => 'required',
+                    'quantity'  => 'required',
+                ]);
+    
+                $data['sale_stock'] = $request->quantity;
+                $data['add_stock'] = 0;
+                $data['order_id'] = $max;
+                $stock = Stock::create($data);
             }
 
-            if($orders){
+            if($stock){
                 return redirect()->route('order.index')->with('message','Order Added');
             }
 
@@ -127,6 +134,11 @@ class OrderController extends Controller
     public function destroy($id)
     {
         //
+        $id2 = Order::find($id);
+        $result = $id2->delete();
+        if(Stock::where('order_id',$id)->delete()){
+            return redirect()->route('order.index')->with('message','Order Deleted');
+        }
     }
 
 

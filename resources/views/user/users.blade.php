@@ -63,7 +63,7 @@
                                     <th>#</th>
                                     <th>User Name</th>
                                     <th>E-Mail</th>
-                                    {{-- <th>Action</th> --}}
+                                    <th>Action</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -72,6 +72,13 @@
                                         <td>{{$key+1}}</td>
                                         <td>{{$user->name}}</td>
                                         <td>{{$user->email}}</td>
+                                        <td>
+                                            <div class="btn-group btn-group-xs">
+                                                <a href="{{route('userdelete',$user->id)}}" class="btn btn-danger" onclick="return confirm('Are You Sure To Delete This..?')" title="Delete"><i class="fa fa-trash"></i></a>
+                                                {{-- <a href="" class="btn btn-warning" title="Edit"><i class="fa fa-edit"></i></a> --}}
+                                                {{-- <a href="" class="btn btn-primary" title="View Profile"><i class="fa fa-eye"></i></a> --}}
+                                            </div>
+                                        </td>
                                     </tr>
                                 @endforeach
                         

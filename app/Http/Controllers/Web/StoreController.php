@@ -97,5 +97,10 @@ class StoreController extends Controller
     public function destroy($id)
     {
         //
+        $id = Store::find($id);
+        $result = $id->delete();
+        if($result){
+            return redirect()->route('store.index')->with('message','Store Deleted');
+        }
     }
 }

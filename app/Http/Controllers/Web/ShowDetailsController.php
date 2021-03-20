@@ -119,5 +119,10 @@ class ShowDetailsController extends Controller
     public function destroy($id)
     {
         //
+        $id = ShoeDetails::find($id);
+        $result = $id->delete();
+        if($result){
+            return redirect()->route('shoedetails.index')->with('message','Shoe Details Deleted');
+        }
     }
 }

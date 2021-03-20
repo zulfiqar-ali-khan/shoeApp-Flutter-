@@ -78,8 +78,8 @@
                                     <td>{{$customer->city}}</td>
                                     <td>
                                         <div class="btn-group btn-group-xs">
-                                            <a href="" class="btn btn-danger" onclick="return confirm('Are You Sure To Delete This..?')" title="Delete"><i class="fa fa-trash"></i></a>
-                                            <a href="" class="btn btn-warning" title="Edit"><i class="fa fa-edit"></i></a>
+                                            <a href="{{route('customerdelete',$customer->id)}}" class="btn btn-danger" onclick="return confirm('Are You Sure To Delete This..?')" title="Delete"><i class="fa fa-trash"></i></a>
+                                            {{-- <a href="" class="btn btn-warning" title="Edit"><i class="fa fa-edit"></i></a> --}}
                                             {{-- <a href="" class="btn btn-primary" title="View Profile"><i class="fa fa-eye"></i></a> --}}
                                         </div>
                                     </td>
@@ -118,7 +118,7 @@
                     </div>
                     <div class="form-group">
                         <label for="">Contact #</label>
-                        <input type="number" class="form-control" name="contact">
+                        <input type="text" class="form-control" name="contact">
                     </div>
                     <div class="form-group">
                         <label for="">Location</label>
