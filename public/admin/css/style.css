@@ -394,7 +394,7 @@ body.mini-navbar .navbar-static-side {
 body.mini-navbar .profile-element,
 body.mini-navbar .nav-label,
 body.mini-navbar .navbar-default .nav li a span {
-  display: none;
+  display: inline;
 }
 body.canvas-menu .profile-element {
   display: block;
@@ -8451,7 +8451,7 @@ body.md-skin {
     display: none;
     z-index: 2001;
     position: absolute;
-    width: 70px;
+    width: 300px;
   }
   .body-small.mini-navbar .navbar-static-side {
     display: block;

@@ -24,7 +24,8 @@
 <body class="pace-done">
     {{-- mini-navbar --}}
     <div id="wrapper">
-        <nav class="navbar-default navbar-static-side" role="navigation">
+        <nav class="navbar-default navbar-static-side" role="navigation" style="width: 200px;
+        background: #293846;">
             <div class="sidebar-collapse">
                 <ul class="nav metismenu" id="side-menu">
                     <li class="nav-header">
@@ -36,15 +37,15 @@
                                 <span class="clear"> <span class="block m-t-xs"> <strong class="font-bold">{{Auth::user()->name}}</strong>
                                     </span>
                                      <span class="text-muted text-xs block">{{Auth::user()->user_type}} </span>
-                                    
-                                </span> 
+
+                                </span>
                             </a>
-                           
+
                         </div>
                     </li>
                     <li class="active">
                         <a href="{{route('dashboard')}}"><i class="fa fa-th-large"></i> <span class="nav-label">Dashboard</span></a>
-                    </li>                   
+                    </li>
                     <li>
                         <a href="{{route('user.index')}}"><i class="fa fa-user"></i> <span class="nav-label">User</span></a>
                     </li>
@@ -66,7 +67,7 @@
                     <li>
                         <a href="{{route('order.index')}}"><i class="fa fa-truck"></i> <span class="nav-label">Orders</span></a>
                     </li>
-                   
+
                 </ul>
 
             </div>
@@ -197,11 +198,11 @@
                                             document.getElementById('logout-form').submit();">
                                <i class="fa fa-sign-out"></i>  {{ __('Logout') }}
                             </a>
-    
+
                             <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
                                 @csrf
                             </form>
-                           
+
                         </li>
                         {{-- <li>
                             <a class="right-sidebar-toggle">
@@ -223,7 +224,7 @@
                 </div>
             </div>
         </div>
-       
+
     </div>
 
     <!-- Mainly scripts -->
@@ -315,7 +316,7 @@
         $(document).ready(function() {
 
 
-        
+
 
 
         });
@@ -332,7 +333,7 @@
 
     @yield('script')
 
-    
+
 </body>
 
 </html>
