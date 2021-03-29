@@ -65,7 +65,6 @@ class OrderController extends Controller
 
             $max = $orders->id;
             
-           w
             if($orders){
                 
                 $data = $request->validate([

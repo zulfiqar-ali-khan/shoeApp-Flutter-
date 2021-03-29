@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Web;
 
 use App\Http\Controllers\Controller;
 use App\Store;
+use App\Stock;
+use App\Brand;
 use Illuminate\Http\Request;
 
 class StoreController extends Controller
@@ -63,6 +65,11 @@ class StoreController extends Controller
     public function show($id)
     {
         //
+        $brands = brand::with(['stock' => function($q) use ($id){
+            $q->where('store_id',$id)->selectRaw('SUM(add_stock) - SUM(sale_stock)  as totalstock , brand_id')->groupBy('brand_id');
+        }])->get();
+
+        return view('store.storedetails',compact('brands'));
     }
 
     /**

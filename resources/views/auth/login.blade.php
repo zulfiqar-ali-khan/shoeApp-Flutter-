@@ -14,12 +14,21 @@
     <link href="{{asset('admin/css/animate.css')}}" rel="stylesheet">
     <link href="{{asset('admin/css/style.css')}}" rel="stylesheet">
 
+    <style>
+        body{
+            background:url('{{asset("shoe.jpg")}}');
+            background-position: center;
+            background-size: cover;
+            background-repeat: no-repeat
+        }
+    </style>
+
 </head>
 
-<body class="gray-bg">
+<body class="gray-bg" style="backgorud-image:url('{{asset('shoe.jpg')}}')">
 
     <div class="loginColumns animated fadeInDown">
-        <div class="row">
+    <div class="row" style="background:#eee;padding:20px;">    
 
             <div class="col-md-6 text-justify">
                 <h2 class="font-bold">Welcome To Sixer</h2>

@@ -75,8 +75,7 @@
                                     <td>
                                         <div class="btn-group btn-group-xs">
                                             <a href="{{route('storedelete',$Store->id)}}" class="btn btn-danger" onclick="return confirm('Are You Sure To Delete This..?')" title="Delete"><i class="fa fa-trash"></i></a>
-                                            {{-- <a href="" class="btn btn-warning" title="Edit"><i class="fa fa-edit"></i></a> --}}
-                                            {{-- <a href="" class="btn btn-primary" title="View Profile"><i class="fa fa-eye"></i></a> --}}
+                                            <a href="{{route('store.show',$Store->id)}}" class="btn btn-primary" title="View Profile"><i class="fa fa-database"></i></a>
                                         </div>
                                     </td>
                                 </tr>
