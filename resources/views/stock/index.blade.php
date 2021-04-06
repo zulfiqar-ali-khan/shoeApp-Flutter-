@@ -10,7 +10,7 @@
 @section('content')
 
 <div class="row wrapper border-bottom white-bg page-heading">
-    <div class="col-lg-10">
+    <div class="col-lg-4">
         <h2>Stock List</h2>
         <ol class="breadcrumb">
             <li>
@@ -24,7 +24,30 @@
             </li>
         </ol>
     </div>
-    <div class="col-lg-2">
+    <div class="col-md-4">
+        <form action="{{route('datebetweenstock')}}" method="post">
+            {{ csrf_field() }}
+            <div class="form-group">
+                <label for="">Select Brand</label>
+                <select name="brand_id" class="form-control" id="brand">
+                    <option value="">--Select Brand--</option>
+                    @foreach ($brands as $brand)
+                        <option value="{{$brand->id}}">{{$brand->brand_name}}</option>
+                    @endforeach
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="">From Date</label>
+                <input type="date" name="from" class="form-control">
+            </div>
+            <div class="form-group">
+                <label for="">To Date</label>
+                <input type="date" name="to" class="form-control">
+            </div>
+            <input type="submit" class="btn btn-primary btn-block" value="Filter">
+        </form>
+    </div>
+    <div class="col-lg-2 col-lg-offset-2">
         <a class="btn btn-info btn-outline" data-toggle="modal" data-target="#myModal6" style="margin-top:40px;">Add Stock</a>
     </div>
 
@@ -102,7 +125,13 @@
                                                 <span class="label label-danger">Sale</span>
                                             @endif
                                         </td>
-                                        <td>{{$stock->created_at->format('d-m-Y')}}</td>
+                                        <td>
+                                            @if($stock->date == NULL)
+                                                {{$stock->created_at->format('d-m-Y')}}
+                                            @else
+                                                {{ date('d-m-Y', strtotime($stock->date))}}
+                                            @endif
+                                        </td>
                                         <td>
                                             <div class="btn-group btn-group-xs">
                                                 <a href="{{route('stockdelete',$stock->id)}}" class="btn btn-danger" onclick="return confirm('Are You Sure To Delete This..?')" title="Delete"><i class="fa fa-trash"></i></a>
@@ -137,6 +166,14 @@
                 <form action="{{route('stock.store')}}" method="POST">
                     {{csrf_field()}}
                     <div class="row">
+
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="">Date</label>
+                                <input  type="date" name="date" class="form-control">
+                            </div>
+                        </div>
+
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="">Select Brand</label>
@@ -148,6 +185,7 @@
                                 </select>
                             </div>
                         </div>
+
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="">Select Store</label>

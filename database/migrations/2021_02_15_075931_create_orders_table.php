@@ -20,6 +20,7 @@ class CreateOrdersTable extends Migration
             $table->foreignId('shoe_id');
             $table->foreignId('customer_id');
             $table->integer('quantity');
+            $table->date('date')->nullable();
             $table->integer('total_amount');
             $table->timestamps();
 

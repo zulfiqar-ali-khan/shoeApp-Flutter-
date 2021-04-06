@@ -20,21 +20,13 @@
                     <h5>{{$brand->brand_name}}</h5>
                 </div>
                 <div class="ibox-content">
-                    {{-- @php
-                        $stock=0;
-                        $assign=0;
-                    @endphp
-                    @if(!$brand->shoedetails == null)
-                        @php $stock = $brand->shoedetails->totalstock @endphp
-                    @endif
-                    @if(!$brand->order == null)
-                        @php $assign = $brand->order->saleStock @endphp
-                        @endif --}}
                         @if($brand->stock !== Null)
                             <h3 class="no-margins">{{number_format($brand->stock->totalstock)}}</h3>
                             @else
                             <h3 class="no-margins">0</h3>
                         @endif
+                        <br>
+                    <a href="{{route('articalstock',['store' => $store->id,'brand' => $brand->id])}}" class="btn btn-info btn-xs">Artical Record</a></a>
                 </div>
             </div>
         </div>

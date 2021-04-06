@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Store;
 use App\Stock;
 use App\Brand;
+use App\ShoeDetails;
 use Illuminate\Http\Request;
 
 class StoreController extends Controller
@@ -65,11 +66,20 @@ class StoreController extends Controller
     public function show($id)
     {
         //
+        $store = Store::find($id);
         $brands = brand::with(['stock' => function($q) use ($id){
             $q->where('store_id',$id)->selectRaw('SUM(add_stock) - SUM(sale_stock)  as totalstock , brand_id')->groupBy('brand_id');
         }])->get();
+        // return $store;
+        return view('store.storedetails',compact('brands','store'));
+    }
 
-        return view('store.storedetails',compact('brands'));
+    public function articalstock($store, $brand)
+    {
+        $articals = Stock::where(['store_id' => $store,'brand_id' => $brand])->selectRaw('SUM(add_stock) - SUM(sale_stock)  as articalStock, shoe_id')->groupBy('shoe_id')->with('shoedetails')->get();
+        //    return $articals; 
+
+        return view('store.articalstock',compact('articals'));
     }
 
     /**

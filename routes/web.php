@@ -45,6 +45,7 @@ Route::group(['middleware' => ['auth']], function () {
     // Order 
     Route::resource('order', 'Web\OrderController');
     Route::get('orderdelete/{id}', 'Web\OrderController@destroy')->name('orderdelete');
+    Route::post('datebetween', 'Web\OrderController@datebetween')->name('datebetween');
 
     Route::post('takeshoes', 'Web\OrderController@takeshoes')->name('takeshoes');
 
@@ -60,6 +61,7 @@ Route::group(['middleware' => ['auth']], function () {
     // Stock
     Route::resource('stock', 'Web\StockController');
     Route::get('stockdelete/{id}', 'Web\StockController@destroy')->name('stockdelete');
+    Route::post('datebetweenstock', 'Web\StockController@datebetweenstock')->name('datebetweenstock');
 
     Route::post('takeshoesstock', 'Web\StockController@takeshoesstock')->name('takeshoesstock');
 
@@ -67,6 +69,7 @@ Route::group(['middleware' => ['auth']], function () {
     // Store 
     Route::resource('store', 'Web\StoreController');
     Route::get('storedelete/{id}', 'Web\StoreController@destroy')->name('storedelete');
+    Route::get('articalstock/{store}/{brand}', 'Web\StoreController@articalstock')->name('articalstock');
 
 
 

@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Web;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Brand;
-use App\store;
+use App\Store;
 use App\ShoeDetails;
 use App\Stock;
 
@@ -22,7 +22,7 @@ class StockController extends Controller
         $stocks = Stock::with('brand','store','shoedetails')->get();
         // return $stocks;
         $brands = Brand::all();
-        $stores = store::all();
+        $stores = Store::all();
         return view('stock.index',compact('brands','stores','stocks'));
     }
 
@@ -54,6 +54,7 @@ class StockController extends Controller
                 'store_id'    => 'required',
                 'shoe_id'  => 'required',
                 'quantity'  => 'required',
+                'date'  => 'required',
             ]);
 
             $data['add_stock'] = $request->quantity;
@@ -135,5 +136,13 @@ class StockController extends Controller
         
         $brands = ShoeDetails::where('brand_id',$request->brand_id)->get();
         return response()->json($brands);
+    }
+
+
+    public function datebetweenstock(Request $request)
+    {
+        $stocks = Stock::where('brand_id',$request->brand_id)->whereBetween('date', [$request->from, $request->to])->with('brand','store','shoedetails')->get();
+        // return $stocks;
+        return view('stock.stockbetween',compact('stocks'));  
     }
 }

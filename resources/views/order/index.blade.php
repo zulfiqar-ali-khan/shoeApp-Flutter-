@@ -10,7 +10,7 @@
 @section('content')
 
 <div class="row wrapper border-bottom white-bg page-heading">
-    <div class="col-lg-10">
+    <div class="col-lg-4">
         <h2>Order List</h2>
         <ol class="breadcrumb">
             <li>
@@ -24,7 +24,21 @@
             </li>
         </ol>
     </div>
-    <div class="col-lg-2">
+    <div class="col-md-4">
+        <form action="{{route('datebetween')}}" method="post">
+            {{ csrf_field() }}
+            <div class="form-group">
+                <label for="">From Date</label>
+                <input type="date" name="from" class="form-control">
+            </div>
+            <div class="form-group">
+                <label for="">To Date</label>
+                <input type="date" name="to" class="form-control">
+            </div>
+            <input type="submit" class="btn btn-primary btn-block" value="Filter">
+        </form>
+    </div>
+    <div class="col-lg-2 col-lg-offset-2">
         <a class="btn btn-info btn-outline" data-toggle="modal" data-target="#myModal6" style="margin-top:40px;">Add Order</a>
     </div>
 
@@ -63,6 +77,7 @@
                                     <th>#</th>
                                     <th>Customer Name</th>
                                     <th>Brand Name</th>
+                                    <th>Store Name</th>
                                     <th>Color</th>
                                     <th>Artical</th>
                                     <th>Quantity</th>
@@ -81,18 +96,25 @@
                                     @foreach ($order->brand as $item)
                                     <td>{{$item->brand_name}}</td>
                                     @endforeach
+                                    @foreach ($order->store as $store)
+                                    <td>{{$store->store_name}}</td>
+                                    @endforeach
 
                                     @foreach ($order->shoedetails as $shoe)
                                     <td>{{$shoe->color}}</td>
                                     <td>{{$shoe->artical}}</td>
                                     @endforeach
                                     <td>{{$order->quantity}}</td>
-                                    <td>{{$order->created_at->format('d-m-Y')}}</td>
+                                   <td>
+                                        @if($order->date == NULL)
+                                            {{$order->created_at->format('d-m-Y')}}
+                                        @else
+                                            {{ date('d-m-Y', strtotime($order->date))}}
+                                        @endif
+                                    </td>
                                     <td>
                                         <div class="btn-group btn-group-xs">
                                             <a href="{{route('orderdelete',$order->id)}}" class="btn btn-danger" onclick="return confirm('Are You Sure To Delete This..?')" title="Delete"><i class="fa fa-trash"></i></a>
-                                            {{-- <a href="" class="btn btn-warning" title="Edit"><i class="fa fa-edit"></i></a> --}}
-                                            {{-- <a href="" class="btn btn-primary" title="View Profile"><i class="fa fa-eye"></i></a> --}}
                                         </div>
                                     </td>
                                 </tr>
@@ -124,6 +146,14 @@
                 <form action="{{route('order.store')}}" method="POST" enctype="multipart/form-data">
                     {{csrf_field()}}
                     <div class="row">
+
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="">Date</label>
+                                <input type="date" name="date" class="form-control">
+                            </div>
+                        </div>
+
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="">Select Customer</label>

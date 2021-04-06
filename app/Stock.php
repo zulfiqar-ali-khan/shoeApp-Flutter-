@@ -8,7 +8,7 @@ class Stock extends Model
 {
     //
     protected $fillable = [
-        'brand_id','shoe_id','add_stock','sale_stock','store_id','order_id'
+        'brand_id','shoe_id','add_stock','sale_stock','store_id','order_id','date'
     ];
 
     public function brand(){

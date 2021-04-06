@@ -21,10 +21,11 @@ class OrderController extends Controller
     public function index()
     {
         //
-        $orders = Order::with('customer','brand','shoedetails')->get();
+        $orders = Order::with('customer','brand','shoedetails','store')->get();
         $brands = Brand::all();
         $customers = Customer::all();
         $stores = Store::all();
+        // return $orders;
         return view('order.index',compact('orders','brands','customers','stores'));
     }
 
@@ -58,6 +59,7 @@ class OrderController extends Controller
                  'shoe_id' => $request->shoe_id, 
                  'quantity' => $request->quantity, 
                  'total_amount' => $request->total_amount, 
+                 'date' => $request->date, 
             );
              $orders = Order::create($row);
 
@@ -153,4 +155,11 @@ class OrderController extends Controller
     //     $brands = ShoeDetails::where('brand_id',$request->brand_id)->get();
     //     return response()->json($brands);
     // }
+
+
+    public function datebetween(Request $request)
+    {
+        $orders = Order::whereBetween('date', [$request->from, $request->to])->with('customer','brand','shoedetails','store')->get();
+        return view('order.datebetween',compact('orders'));  
+    }
 }
