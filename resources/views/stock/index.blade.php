@@ -29,7 +29,7 @@
             {{ csrf_field() }}
             <div class="form-group">
                 <label for="">Select Brand</label>
-                <select name="brand_id" class="form-control" id="brand">
+                <select name="brand_id" class="form-control">
                     <option value="">--Select Brand--</option>
                     @foreach ($brands as $brand)
                         <option value="{{$brand->id}}">{{$brand->brand_name}}</option>
@@ -235,11 +235,10 @@
 
 <script>
 
-    document.getElementById('brand').addEventListener('click',shoedetails);
+    document.getElementById('brand').addEventListener('change',shoedetails);
   
 
     function shoedetails(){
-
         var brand = document.getElementById('brand').value;     
 
             $.ajaxSetup({

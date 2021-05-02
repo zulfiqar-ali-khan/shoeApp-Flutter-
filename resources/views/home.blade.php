@@ -97,7 +97,11 @@
                                     <td>{{$shoe->artical}}</td>
                                     @endforeach
                                     <td>{{$order->quantity}}</td>
-                                    <td>{{$order->created_at->format('d-m-Y')}}</td>
+                                    <td> @if($order->date == NULL)
+                                        {{$order->created_at->format('d-m-Y')}}
+                                    @else
+                                        {{ date('d-m-Y', strtotime($order->date))}}
+                                    @endif</td>
                                 </tr>
                                     
                                 @endforeach

@@ -21,7 +21,7 @@ class OrderController extends Controller
     public function index()
     {
         //
-        $orders = Order::with('customer','brand','shoedetails','store')->get();
+        $orders = Order::with('customer','brand','shoedetails','store')->orderBy('id','DESC')->get();
         $brands = Brand::all();
         $customers = Customer::all();
         $stores = Store::all();
@@ -48,18 +48,17 @@ class OrderController extends Controller
     public function store(Request $request)
     {
         //
-        // dd($request->all());
+    //    dd($request->all());
         try {
 
-             // $orders = Order::create($data);
              $row =  array(
-                 'customer_id' => $request->customer_id,
-                 'store_id' => $request->store_id, 
-                 'brand_id' => $request->brand_id, 
-                 'shoe_id' => $request->shoe_id, 
-                 'quantity' => $request->quantity, 
-                 'total_amount' => $request->total_amount, 
-                 'date' => $request->date, 
+                 'customer_id'  => $request->customer_id,
+                 'store_id'     => $request->store_id,
+                 'brand_id'     => $request->brand_id,
+                 'shoe_id'      => $request->shoe_id,
+                 'quantity'     => $request->quantity,
+                 'total_amount' => $request->total_amount,
+                 'date'         => $request->date,
             );
              $orders = Order::create($row);
 
@@ -69,16 +68,18 @@ class OrderController extends Controller
             
             if($orders){
                 
-                $data = $request->validate([
+               $data = $request->validate([
                     'brand_id' => 'required',
-                    'store_id'    => 'required',
+                    'store_id' => 'required',
                     'shoe_id'  => 'required',
-                    'quantity'  => 'required',
+                    'quantity' => 'required',
+                    'date'     => 'required',
                 ]);
     
                 $data['sale_stock'] = $request->quantity;
                 $data['add_stock'] = 0;
                 $data['order_id'] = $max;
+
                 $stock = Stock::create($data);
             }
 
