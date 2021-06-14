@@ -21,7 +21,7 @@ class DashbaordController extends Controller
         }])->get();
         // return $brands;
         $current = date('Y-m-d');
-        $orders = Order::with('customer','brand','shoedetails')->orderBy('id','desc')->get();
+        $orders = Order::with('customer','brand','shoedetails')->orderBy('id','desc')->take(10)->get();
         return view('home',compact('brands','orders'));
     }
 

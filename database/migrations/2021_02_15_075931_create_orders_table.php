@@ -22,6 +22,7 @@ class CreateOrdersTable extends Migration
             $table->integer('quantity');
             $table->date('date')->nullable();
             $table->integer('total_amount');
+            $table->integer('inv_id')->default(0);
             $table->timestamps();
 
             $table->foreign('brand_id')->references('id')->on('brands');

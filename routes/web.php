@@ -78,6 +78,10 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('userdelete/{id}', 'UserController@destroy')->name('userdelete');
 
 
+    Route::resource('orderinv', 'OrderInvController');
+    Route::get('orderinvdelete/{id}', 'OrderInvController@destroy');
+
+
 
 
 

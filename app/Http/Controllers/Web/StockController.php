@@ -34,6 +34,9 @@ class StockController extends Controller
     public function create()
     {
         //
+        $brands = Brand::all();
+        $stores = Store::all();
+        return view('stock.multistock',compact('brands','stores'));
     }
 
     /**
@@ -51,20 +54,32 @@ class StockController extends Controller
             
             $data = $request->validate([
                 'brand_id' => 'required',
-                'store_id'    => 'required',
+                'store_id' => 'required',
                 'shoe_id'  => 'required',
-                'quantity'  => 'required',
-                'date'  => 'required',
+                'quantity' => 'required',
+                'date'     => 'required',
             ]);
 
-            $data['add_stock'] = $request->quantity;
-            $data['sale_stock'] = 0;
-            $data['order_id'] = 0;
+            foreach ($request->shoe_id as $key => $shoe) {
+                if($request->quantity[$key] != 0){
+                    $data = array(
+                        'brand_id'   => $request->brand_id,
+                        'store_id'   => $request->store_id,
+                        'shoe_id'    => $request->shoe_id[$key],
+                        'add_stock'  => $request->quantity[$key],
+                        'sale_stock' => 0,
+                        'order_id'   => 0,
+                        'date'       => $request->date,
+                    );
 
-            
+                    $stock = Stock::create($data);
+                    
+                }
+            }
 
-
-            $stock = Stock::create($data);
+            // $data['add_stock'] = $request->quantity;
+            // $data['sale_stock'] = 0;
+            // $data['order_id'] = 0;
 
             if($stock){
                 return redirect()->route('stock.index')->with('message','Stock added');
@@ -102,6 +117,10 @@ class StockController extends Controller
     public function edit($id)
     {
         //
+        $stock = Stock::with('shoedetails')->find($id);
+        $brands = Brand::all();
+        $stores = Store::all();
+        return view('stock.edit', compact('stock','brands','stores'));
     }
 
     /**
@@ -114,6 +133,23 @@ class StockController extends Controller
     public function update(Request $request, $id)
     {
         //
+        // dd($request->all());
+        try {
+            
+            $row = Stock::find($id);
+            $row->brand_id  = $request->brand_id;
+            $row->store_id  = $request->store_id;
+            $row->shoe_id   = $request->shoe_id;
+            $row->add_stock = $request->quantity;
+            $row->date      = $request->date;
+            $result = $row->update();
+            if($result){
+                return  redirect()->route('stock.index');
+            }
+            
+        } catch (\Exception $e) {
+            return $e->getMessage();
+        }
     }
 
     /**

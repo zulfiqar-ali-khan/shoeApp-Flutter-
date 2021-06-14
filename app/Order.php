@@ -9,7 +9,7 @@ class Order extends Model
     //
 
     protected $fillable = [
-        'brand_id','shoe_id','customer_id','quantity','total_amount','store_id','date'
+        'brand_id','shoe_id','customer_id','quantity','total_amount','store_id','date','inv_id'
     ];
 
 

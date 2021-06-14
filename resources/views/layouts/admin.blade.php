@@ -64,8 +64,11 @@
                     <li>
                         <a href="{{route('stock.index')}}"><i class="fa fa-database"></i> <span class="nav-label">Add Stock</span></a>
                     </li>
-                    <li>
+                    {{-- <li>
                         <a href="{{route('order.index')}}"><i class="fa fa-truck"></i> <span class="nav-label">Orders</span></a>
+                    </li> --}}
+                    <li>
+                        <a href="{{route('orderinv.index')}}"><i class="fa fa-truck"></i> <span class="nav-label"> Order</span></a>
                     </li>
 
                 </ul>

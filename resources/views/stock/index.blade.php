@@ -48,7 +48,7 @@
         </form>
     </div>
     <div class="col-lg-2 col-lg-offset-2">
-        <a class="btn btn-info btn-outline" data-toggle="modal" data-target="#myModal6" style="margin-top:40px;">Add Stock</a>
+        <a class="btn btn-info btn-outline" href="{{route('stock.create')}}" style="margin-top:40px;">Add Stock</a>
     </div>
 
 </div>
@@ -121,7 +121,7 @@
                                         <td>
                                             @if($stock->add_stock !== 0)
                                                 <span class="label label-primary">Add</span>
-                                                @else
+                                            @else
                                                 <span class="label label-danger">Sale</span>
                                             @endif
                                         </td>
@@ -135,7 +135,9 @@
                                         <td>
                                             <div class="btn-group btn-group-xs">
                                                 <a href="{{route('stockdelete',$stock->id)}}" class="btn btn-danger" onclick="return confirm('Are You Sure To Delete This..?')" title="Delete"><i class="fa fa-trash"></i></a>
-                                                {{-- <a href="" class="btn btn-warning" title="Edit"><i class="fa fa-edit"></i></a> --}}
+                                                @if($stock->add_stock !== 0)
+                                                    <a href="{{route('stock.edit',$stock->id)}}" class="btn btn-warning" title="Edit"><i class="fa fa-edit"></i></a>
+                                                @endif
                                                 {{-- <a href="" class="btn btn-primary" title="View Profile"><i class="fa fa-eye"></i></a> --}}
                                             </div>
                                         </td>
@@ -154,7 +156,7 @@
 
 
 
-
+{{-- 
 <div class="modal inmodal fade" id="myModal6" tabindex="-1" role="dialog"  aria-hidden="true">
     <div class="modal-dialog modal-md">
         <div class="modal-content">
@@ -227,7 +229,7 @@
             </div>
         </div>
     </div>
-</div>
+</div> --}}
 
 @endsection
 
